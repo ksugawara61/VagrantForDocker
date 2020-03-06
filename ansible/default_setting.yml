@@ -1,0 +1,14 @@
+# for default setting
+- block:
+  - name: Set timezone to Asia/Tokyo
+    timezone:
+      name: Asia/Tokyo
+  - name: Install package epel-release
+    yum:
+      name: https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-12.noarch.rpm
+  - name: Install standard package
+    yum:
+      name:
+      - vim
+      - htop
+      state: latest

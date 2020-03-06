@@ -1,0 +1,28 @@
+- block:
+  # for docker setting
+  - name: Add docker-ce repository
+    shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  - name: Install package docker
+    yum:
+      pkg: docker-ce-18.06.3.ce-3.el7
+      state: latest
+
+  # for docker-compose setting
+  - name: Fetch and Install package docker-compose
+    get_url:
+      url: https://github.com/docker/compose/releases/download/1.24.0/docker-compose-Linux-x86_64
+      dest: /usr/local/bin/docker-compose
+      owner: root
+      group: root
+      mode: '0755'
+  - name: Set user group to vagrant user for using docker-compose
+    user:
+      name: vagrant
+      group: vagrant
+      groups: docker
+  - name: Restart docker deamon for setting docker-compose
+    systemd:
+      name: docker
+      state: restarted
+      daemon_reload: yes
+      enabled: yes

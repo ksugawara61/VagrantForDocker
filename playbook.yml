@@ -1,0 +1,7 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - include: ./ansible/default_setting.yml
+    - include: ./ansible/git_setting.yml
+    - include: ./ansible/docker_setting.yml

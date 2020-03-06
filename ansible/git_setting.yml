@@ -1,0 +1,39 @@
+# for git setting
+- block:
+  - name: Install necessary package for git complile
+    yum:
+      name:
+      - wget
+      - gcc
+      state: latest
+  - name: Install dependent packages for git
+    yum:
+      name:
+      - curl-devel
+      - expat-devel
+      - gettext-devel
+      - openssl-devel
+      - perl-devel
+      - zlib-devel
+      state: latest
+  - name: Download git tarball
+    get_url:
+      url: https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.22.0.tar.gz
+      dest: /usr/local/src/git-2.22.0.tar.gz
+  - name: Untar git tarball
+    unarchive:
+      src: /usr/local/src/git-2.22.0.tar.gz
+      dest: /usr/local/src
+      remote_src: yes
+  - name: Configure git src
+    shell: ./configure --prefix=/usr
+    args:
+      chdir: /usr/local/src/git-2.22.0
+  - name: Make all for git
+    make:
+      chdir: /usr/local/src/git-2.22.0
+      target: all
+  - name: Make install for git
+    make:
+      chdir: /usr/local/src/git-2.22.0
+      target: install
